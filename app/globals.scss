@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+body {
+  @apply bg-gray-950 text-white;
+}
+
+h1 {
+  font-family: var(--font-syne-mono), "Courier New", Courier, monospace;
+}
+
+.link {
+  font-family: var(--font-syne-mono), "Courier New", Courier, monospace;
+
+  position: relative;
+  &::before {
+    content: ">";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translate(0, -63%);
+
+    font-size: 1.5em;
+
+    opacity: 0;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin glitchCopy {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch {
+  position: relative;
+
+  letter-spacing: 0.25em;
+  animation: glitch-skew 1s infinite linear alternate-reverse;
+
+  &::before {
+    @include glitchCopy;
+    left: 2px;
+    text-shadow: -2px 0 #f6ff00;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+
+  &::after {
+    @include glitchCopy;
+    left: -2px;
+    text-shadow: -2px 0 #1900ff, 2px 2px #21b550;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+  }
+}
+
+@keyframes glitch-anim {
+  $steps: 20;
+  @for $i from 0 to $steps {
+    #{percentage($i*(1/$steps))} {
+      clip: rect(random(100) + px, 9999px, random(100) + px, 0);
+      transform: skew((random(100) / 100) + deg);
+    }
+  }
+}
+
+@keyframes glitch-anim2 {
+  $steps: 20;
+  @for $i from 0 to $steps {
+    #{percentage($i*(1/$steps))} {
+      clip: rect(random(100) + px, 9999px, random(100) + px, 0);
+      transform: skew((random(100) / 100) + deg);
+    }
+  }
+}
+
+@keyframes glitch-skew {
+  $steps: 10;
+  @for $i from 0 to $steps {
+    #{percentage($i*(1/$steps))} {
+      transform: skew((random(10) - 5) + deg);
+    }
+  }
+}
+
+.crt {
+  background: linear-gradient(to top, #000000, #000000, #333333, #333333);
+  background-size: cover;
+  background-size: 100% 1px;
+}
+
+@media screen {
+  .crt {
+    animation: scanlines infinite 55s linear;
+  }
+}
+@keyframes scanlines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -10px;
+  }
+}
